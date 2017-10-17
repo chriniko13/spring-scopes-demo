@@ -41,4 +41,10 @@ public class DemoResource {
         return demoService.getDbStatus();
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = "/clear-db", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public void clearDb() {
+        demoService.clearDb();
+    }
+
+
 }

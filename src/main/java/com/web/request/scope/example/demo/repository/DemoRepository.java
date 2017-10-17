@@ -58,4 +58,8 @@ public class DemoRepository {
     public Map<String, List<String>> getDb() {
         return db;
     }
+
+    public void clearDb() {
+        db.clear();
+    }
 }

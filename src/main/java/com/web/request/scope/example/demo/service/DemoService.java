@@ -66,4 +66,8 @@ public class DemoService {
 
         return true;
     }
+
+    public void clearDb() {
+        demoRepository.clearDb();
+    }
 }
