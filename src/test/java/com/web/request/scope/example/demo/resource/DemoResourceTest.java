@@ -20,6 +20,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -115,4 +116,12 @@ public class DemoResourceTest extends DemoApplicationTests {
                 .andExpect(content().bytes(objectMapper.writeValueAsBytes(dbResponseDto)));
     }
 
+    @Test
+    public void clearDb() throws Exception {
+        //when..
+        mockMvc.perform(delete("/demo/clear-db")).andExpect(status().isOk());
+
+        //then...
+        Mockito.verify(demoService).clearDb();
+    }
 }

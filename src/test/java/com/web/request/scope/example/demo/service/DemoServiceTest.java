@@ -176,4 +176,13 @@ public class DemoServiceTest extends DemoApplicationTests {
 
     }
 
+    @Test
+    public void clearDb() throws Exception {
+        //when...
+        demoService.clearDb();
+
+        //then...
+        Mockito.verify(demoRepository).clearDb();
+    }
+
 }

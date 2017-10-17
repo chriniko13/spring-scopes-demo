@@ -116,4 +116,18 @@ public class DemoRepositoryTest extends DemoApplicationTests {
         assertThat(db.get("demoService-threadlocal")).isEqualTo(null);
 
     }
+
+    @Test
+    public void clearDb() throws Exception {
+
+        //given...
+        demoRepository.init();
+
+        //when...
+        demoRepository.clearDb();
+
+        //then...
+        assertThat(demoRepository.getDb().size()).isEqualTo(0);
+
+    }
 }
