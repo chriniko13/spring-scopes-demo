@@ -1,0 +1,4 @@
+NOTES
+
+
+1) To see the output of jacoco go to target directory and open index.html from jacoco-ut folder in browser.
