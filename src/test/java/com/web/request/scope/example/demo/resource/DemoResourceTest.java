@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+//TODO play with json paths.... example:  .andExpect(jsonPath("$", hasSize(1))) .andExpect(jsonPath("$[0].name", is(alex.getName())));
 public class DemoResourceTest extends DemoApplicationTests {
 
     @Autowired
