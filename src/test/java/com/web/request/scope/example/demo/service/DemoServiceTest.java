@@ -1,21 +1,20 @@
 package com.web.request.scope.example.demo.service;
 
 import com.web.request.scope.example.demo.DemoApplicationTests;
+import com.web.request.scope.example.demo.dto.BindingResponseDto;
 import com.web.request.scope.example.demo.dto.DbResponseDto;
 import com.web.request.scope.example.demo.dto.DemoRequestDto;
 import com.web.request.scope.example.demo.dto.DemoResponseDto;
 import com.web.request.scope.example.demo.repository.DemoRepository;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -183,6 +182,23 @@ public class DemoServiceTest extends DemoApplicationTests {
 
         //then...
         Mockito.verify(demoRepository, Mockito.times(1)).clearDb();
+    }
+
+    @Test
+    public void getThreadTransactionIdBindings() throws Exception {
+
+        //given...
+        List<BindingResponseDto> bindingResponseDtos = new ArrayList<>();
+        String txId = UUID.randomUUID().toString();
+        bindingResponseDtos.add(new BindingResponseDto("some-thread", txId));
+        Mockito.when(demoRepository.getThreadTransactionIdBindings()).thenReturn(bindingResponseDtos);
+
+        //when...
+        List<BindingResponseDto> result = demoService.getThreadTransactionIdBindings();
+
+        //then...
+        Assert.assertEquals(bindingResponseDtos, result);
+
     }
 
 }

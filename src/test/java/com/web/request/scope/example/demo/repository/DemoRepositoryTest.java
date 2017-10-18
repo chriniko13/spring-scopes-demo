@@ -1,6 +1,7 @@
 package com.web.request.scope.example.demo.repository;
 
 import com.web.request.scope.example.demo.DemoApplicationTests;
+import com.web.request.scope.example.demo.dto.BindingResponseDto;
 import com.web.request.scope.example.demo.transaction.TransactioIdThreadLocal;
 import com.web.request.scope.example.demo.transaction.TransactionId;
 import org.junit.Test;
@@ -129,5 +130,22 @@ public class DemoRepositoryTest extends DemoApplicationTests {
         //then...
         assertThat(demoRepository.getDb().size()).isEqualTo(0);
 
+    }
+
+    @Test
+    public void getThreadTransactionIdBindings() throws Exception {
+
+        //given...
+        demoRepository.init();
+
+        //when...
+        String txId = UUID.randomUUID().toString();
+        demoRepository.demoServiceThreadLocal(txId);
+
+        //then...
+        List<BindingResponseDto> threadTransactionIdBindings = demoRepository.getThreadTransactionIdBindings();
+        assertThat(threadTransactionIdBindings.size()).isEqualTo(1);
+        assertThat(threadTransactionIdBindings.get(0).getThreadName()).isEqualTo("main");
+        assertThat(threadTransactionIdBindings.get(0).getTransactionId()).isEqualTo(txId);
     }
 }

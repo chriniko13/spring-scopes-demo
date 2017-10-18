@@ -2,10 +2,7 @@ package com.web.request.scope.example.demo.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.request.scope.example.demo.DemoApplicationTests;
-import com.web.request.scope.example.demo.dto.DbHealthResponseDto;
-import com.web.request.scope.example.demo.dto.DbResponseDto;
-import com.web.request.scope.example.demo.dto.DemoRequestDto;
-import com.web.request.scope.example.demo.dto.DemoResponseDto;
+import com.web.request.scope.example.demo.dto.*;
 import com.web.request.scope.example.demo.service.DemoService;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,20 +10,15 @@ import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-//TODO play with json paths.... example:  .andExpect(jsonPath("$", hasSize(1))) .andExpect(jsonPath("$[0].name", is(alex.getName())));
 public class DemoResourceTest extends DemoApplicationTests {
 
     @Autowired
@@ -123,5 +115,25 @@ public class DemoResourceTest extends DemoApplicationTests {
 
         //then...
         Mockito.verify(demoService, Mockito.times(1)).clearDb();
+    }
+
+
+    @Test
+    public void getThreadTransactionIdBindings() throws Exception {
+
+        //given
+        List<BindingResponseDto> bindingResponseDtos = new ArrayList<>();
+        String txId = UUID.randomUUID().toString();
+        bindingResponseDtos.add(new BindingResponseDto("some-thread", txId));
+        Mockito.when(demoService.getThreadTransactionIdBindings()).thenReturn(bindingResponseDtos);
+
+
+        //when-then...
+        mockMvc.perform(get("/demo/bindings"))
+                .andExpect(status().isOk())
+                .andExpect(content().bytes(objectMapper.writeValueAsBytes(bindingResponseDtos)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$..threadName", org.hamcrest.Matchers.is(Collections.singletonList("some-thread"))))
+                .andExpect(MockMvcResultMatchers.jsonPath("$..transactionId", org.hamcrest.Matchers.is(Collections.singletonList(txId))));
+
     }
 }
