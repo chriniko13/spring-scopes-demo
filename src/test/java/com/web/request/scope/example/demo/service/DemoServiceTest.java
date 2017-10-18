@@ -182,7 +182,7 @@ public class DemoServiceTest extends DemoApplicationTests {
         demoService.clearDb();
 
         //then...
-        Mockito.verify(demoRepository).clearDb();
+        Mockito.verify(demoRepository, Mockito.times(1)).clearDb();
     }
 
 }

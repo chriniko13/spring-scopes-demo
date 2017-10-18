@@ -122,6 +122,6 @@ public class DemoResourceTest extends DemoApplicationTests {
         mockMvc.perform(delete("/demo/clear-db")).andExpect(status().isOk());
 
         //then...
-        Mockito.verify(demoService).clearDb();
+        Mockito.verify(demoService, Mockito.times(1)).clearDb();
     }
 }

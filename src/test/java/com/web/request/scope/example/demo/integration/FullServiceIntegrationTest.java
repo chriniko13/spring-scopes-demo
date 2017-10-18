@@ -34,8 +34,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 public class FullServiceIntegrationTest {
 
-    private String runningServiceUrl = "http://localhost:8080";
-
     //Note: we name it mvn and not mockMvc because this is an integration test, all layers are real.
     @Autowired
     private MockMvc mvc;
@@ -52,6 +50,7 @@ public class FullServiceIntegrationTest {
     //Note: for this test we do not need to run the service....spring does it for us...
     @Test
     public void totalTest() throws Exception {
+        final String runningServiceUrl = "http://localhost:8080";
 
         // --- 0 HIT --- (init-clear db)
         mvc.perform(MockMvcRequestBuilders.delete(runningServiceUrl + "/demo/clear-db"))
