@@ -30,6 +30,7 @@ public class DemoResource {
         return demoService.testServiceThreadLocal(demoRequestDto);
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/ensure-healthy-db", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public @ResponseBody
     DbHealthResponseDto ensureHealthyDb() {
         return new DbHealthResponseDto(demoService.ensureHealthyDb());
