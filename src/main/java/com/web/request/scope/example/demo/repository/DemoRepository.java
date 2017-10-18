@@ -1,5 +1,6 @@
 package com.web.request.scope.example.demo.repository;
 
+import com.web.request.scope.example.demo.dto.BindingResponseDto;
 import com.web.request.scope.example.demo.transaction.TransactioIdThreadLocal;
 import com.web.request.scope.example.demo.transaction.TransactionId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +26,27 @@ public class DemoRepository {
 
     private Map<String, List<String>> db;
 
+    private List<BindingResponseDto> threadTransactionIdBindings;
+
     @PostConstruct
     public void init() {
         db = new HashMap<>();
+        threadTransactionIdBindings = new LinkedList<>();
     }
 
 
     public void demoServiceAnnotation(String txIdToStore) {
         final List<String> value = db.get(DEMO_SERVICE_ANNOTATION);
         addEntry(txIdToStore, transactionId.get(), value, DEMO_SERVICE_ANNOTATION);
+
+        threadTransactionIdBindings.add(new BindingResponseDto(Thread.currentThread().getName(), txIdToStore));
     }
 
     public void demoServiceThreadLocal(String txIdToStore) {
         final List<String> value = db.get(DEMO_SERVICE_THREADLOCAL);
         addEntry(txIdToStore, transactioIdThreadLocal.get(), value, DEMO_SERVICE_THREADLOCAL);
+
+        threadTransactionIdBindings.add(new BindingResponseDto(Thread.currentThread().getName(), txIdToStore));
     }
 
     private void addEntry(String txIdToStore1, String txIdToStore2, List<String> value, String demoServiceAnnotation) {
@@ -61,5 +69,9 @@ public class DemoRepository {
 
     public void clearDb() {
         db.clear();
+    }
+
+    public List<BindingResponseDto> getThreadTransactionIdBindings() {
+        return threadTransactionIdBindings;
     }
 }

@@ -1,13 +1,13 @@
 package com.web.request.scope.example.demo.resource;
 
-import com.web.request.scope.example.demo.dto.DbHealthResponseDto;
-import com.web.request.scope.example.demo.dto.DbResponseDto;
-import com.web.request.scope.example.demo.dto.DemoRequestDto;
-import com.web.request.scope.example.demo.dto.DemoResponseDto;
+import com.web.request.scope.example.demo.dto.*;
 import com.web.request.scope.example.demo.service.DemoService;
+import groovy.lang.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/demo")
@@ -30,7 +30,6 @@ public class DemoResource {
         return demoService.testServiceThreadLocal(demoRequestDto);
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/ensure-healthy-db", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
     public @ResponseBody
     DbHealthResponseDto ensureHealthyDb() {
         return new DbHealthResponseDto(demoService.ensureHealthyDb());
@@ -46,5 +45,8 @@ public class DemoResource {
         demoService.clearDb();
     }
 
-
+    @RequestMapping(method = RequestMethod.GET, path = "/bindings", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+    public List<BindingResponseDto> getThreadTransactionIdBindings() {
+        return demoService.getThreadTransactionIdBindings();
+    }
 }

@@ -2,12 +2,14 @@ package com.web.request.scope.example.demo.service;
 
 import com.web.request.scope.example.demo.annotation.Hello;
 import com.web.request.scope.example.demo.annotation.World;
+import com.web.request.scope.example.demo.dto.BindingResponseDto;
 import com.web.request.scope.example.demo.dto.DbResponseDto;
 import com.web.request.scope.example.demo.dto.DemoRequestDto;
 import com.web.request.scope.example.demo.dto.DemoResponseDto;
 import com.web.request.scope.example.demo.repository.DemoRepository;
 import com.web.request.scope.example.demo.transaction.TransactioIdThreadLocal;
 import com.web.request.scope.example.demo.transaction.TransactionId;
+import groovy.lang.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -69,5 +71,9 @@ public class DemoService {
 
     public void clearDb() {
         demoRepository.clearDb();
+    }
+
+    public List<BindingResponseDto> getThreadTransactionIdBindings() {
+        return demoRepository.getThreadTransactionIdBindings();
     }
 }
