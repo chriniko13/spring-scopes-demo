@@ -69,6 +69,7 @@ public class DemoRepository {
 
     public void clearDb() {
         db.clear();
+        threadTransactionIdBindings.clear();
     }
 
     public List<BindingResponseDto> getThreadTransactionIdBindings() {
