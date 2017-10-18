@@ -2,7 +2,6 @@ package com.web.request.scope.example.demo.resource;
 
 import com.web.request.scope.example.demo.dto.*;
 import com.web.request.scope.example.demo.service.DemoService;
-import groovy.lang.Tuple2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
