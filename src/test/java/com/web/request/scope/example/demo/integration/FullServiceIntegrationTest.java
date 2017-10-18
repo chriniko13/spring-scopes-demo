@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.request.scope.example.demo.DemoApplication;
 import com.web.request.scope.example.demo.dto.DemoRequestDto;
 import com.web.request.scope.example.demo.dto.DemoResponseDto;
-import com.web.request.scope.example.demo.resource.DemoResource;
 import net.minidev.json.JSONArray;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.Collections;
@@ -37,12 +35,6 @@ public class FullServiceIntegrationTest {
     //Note: we name it mvn and not mockMvc because this is an integration test, all layers are real.
     @Autowired
     private MockMvc mvc;
-
-    @Autowired
-    private DemoResource demoResource;
-
-    @Autowired
-    private RestTemplate restTemplate;
 
     @Autowired
     private ObjectMapper objectMapper;
