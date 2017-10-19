@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class DemoRepository {
@@ -30,8 +31,8 @@ public class DemoRepository {
 
     @PostConstruct
     public void init() {
-        db = new HashMap<>();
-        threadTransactionIdBindings = new LinkedList<>();
+        db = new ConcurrentHashMap<>();
+        threadTransactionIdBindings = Collections.synchronizedList(new LinkedList<>());
     }
 
 
